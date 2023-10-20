@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eom</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      var colors = $$colors$$;
+      var name = '$$name$$';
+      var desc = '$$description$$';
+      var grids = $$grids$$;
+      var map = new Map();
+      window.addEventListener("load", ()=>{
+        let style = document.createElement("STYLE");
+        style.innerHTML = `button{background:${colors.gradient};}button:hover{background:${colors.gradient};}button:active{background:${colors.gradient};}.popup{background:${colors.gradient};}`;
+        document.querySelector("HEAD").appendChild(style);
+        document.querySelector(".flexCenter").style.minHeight = document.documentElement.clientHeight + "px";
+        document.querySelector(".flexCenter").style.background = "url(media/back.png)";
+        document.getElementById("finger").src = "media/finger.png";
+        document.querySelector(".cap").style.borderTop = `3px solid ${colors.rgb}`;
+        document.querySelector(".nameField").querySelector("h1").innerHTML = name;
+        document.querySelector(".cap").querySelector("h3").innerHTML = desc;
+        for(let oneGrid of grids)
+        {
+            let gr = document.createElement("div");
+            gr.classList.add("wsGrid");
+            let inside = document.createElement("div");
+            inside.style.border = `2px solid ${colors.rgb}`;
+            inside.classList.add("inside");
+            let span = document.createElement("span");
+            span.innerHTML = oneGrid;
+            inside.appendChild(span);
+            gr.appendChild(inside);
+            let img = document.createElement("img");
+            img.src = "media/empty.png";
+            img.style = "max-width: 50px; max-height: 50px;";
+            img.onclick = change;
+            gr.appendChild(img);
+            document.getElementById("workSpace").appendChild(gr);
+            map.set(img, false);
+        }
+      });
+      function change(e)
+      {
+        if(map.get(e.target))
+        {
+          map.set(e.target, false);
+          e.target.src = "media/empty.png";
+        }
+        else
+        {
+          map.set(e.target, true);
+          e.target.src = "media/full.png";
+        }
+      }
+      function shPopup(points)
+      {
+        if(points == 100)
+        {
+          finishGame("Ты молодец! Продолжай в том же духе!", "media/high.png");
+        }
+        else if(points >= 50 && points < 100)
+        {
+          finishGame("Ты хорошо усвоил эту тему. Не останавливайся на достигнутом!", "media/middle.png");
+        }
+        else
+        {
+          finishGame("Попробуй пройти тему еще раз. У тебя все обязательно получится!", "media/low.png");
+        }
+      }
+      function check()
+      {
+          let count = map.size;
+          let perc = 0;
+          for(let res of map)
+          {
+            if(res[1])
+            {
+              perc++;
+            }
+          }
+          let result = perc / count * 100;
+          shPopup(result);
+      }
+      function finishGame(text, imageLink)
+      {
+        let back = document.createElement("DIV");
+        back.classList.add("popUpBack");
+        let popup = document.createElement("DIV");
+        popup.classList.add("popup");
+        popup.style = "display:flex; max-width: 60vw; text-align:center;";
+        popup.innerText = text;
+        back.appendChild(popup);
+        let cat = document.createElement("IMG");
+        cat.src = imageLink;
+        cat.style.maxWidth = "200px";
+        cat.style.marginLeft = "20px";
+        popup.appendChild(cat);
+        document.body.appendChild(back);
+      }
+    </script>
+    <style>
+      strong
+      {
+        font-weight: 700;
+      }
+      p
+      {
+        margin: 0;
+        padding-left: 0;
+      }
+      .text-small
+      {
+        font-size: 1rem;
+      }
+      .text-big
+      {
+        font-size: 1.7rem;
+      }
+      .text-huge
+      {
+        font-size: 2rem;
+      }
+      .text-tiny
+      {
+        font-size: 0.7rem;
+      }
+    @font-face 
+    {
+      font-family: 'Inter';
+      src: url(fonts/Inter-V.ttf);
+    }
+    .checkBox
+    {
+      cursor: pointer;
+    }
+    button
+    {
+      color: white;
+      box-shadow: none;
+      border: 3px solid white;
+      max-width: 200px;
+      padding: 8px;
+    }
+    button:hover
+    {
+      opacity: 80%;
+      box-shadow: none;
+      border: 3px solid white;
+    }
+    button:active
+    {
+      opacity: 50%;
+      box-shadow: none;
+      border: 3px solid white;
+    }
+    .popup
+    {
+      padding-left: 30px;
+      padding-right: 30px;
+      background: transparent;
+      color: white;
+      font-size: 17pt;
+    }
+    </style>
+</head>
+<body>
+  <div class="flexCenter">
+    <div class="nameField" data-tag="name">
+      <h1></h1>
+    </div>
+    <div class="cap" data-tag="cap" id="cap">
+      <img src = "" style="float: left;" id="finger"/>
+      <h3></h3>
+    </div>
+    <div style="max-width: 60vw; display: flex; flex-direction: column; align-items: center;">
+      <div id = "workSpace" style="display: flex;flex-direction: column;">
+
+      </div>
+  <button onclick = "check()" style="padding: 11px;font-size: 14pt;">Завершить</button>
+</div>
+</body>
+</html>

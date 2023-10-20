@@ -1,0 +1,380 @@
+*
+{
+    font-family: Inter;
+    font-weight: 600;
+    --general: #f2f3f4;
+    --second: #dddddd;
+    --bits: #a6a3a1;
+    --other: #6c5e62;
+}
+.imgs
+{
+    max-height: 90%;
+    max-width: 90%;
+    border-radius: .4rem;
+}
+.flexCenter
+{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.generalGrid
+{
+    display: grid;
+    max-width: 1100px;
+    width:100%;
+}
+.nameField
+{
+    min-height: 70px; 
+    max-width: 1280px;
+    width: 100%; 
+}
+h1
+{
+    font-size: 2rem;
+    padding-left: 88px;
+	color:  #15374D;
+}
+h3
+{
+    margin-top: 12px;
+    font-size: 1.5rem;
+    padding-left: 88px;
+    padding-right: 10px;
+	color:  #15374D;
+}
+.draggableField
+{
+    min-height: 100px; 
+    max-width: 1280px;
+    width: 90%; 
+    background: #f2f2f2; 
+    border-radius: 1rem;
+    box-shadow: 0 0 15px 3px #cbc9c9;
+    margin-bottom: 8px;
+    margin-top: 11px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    place-items: center stretch;
+    gap: 6px;
+    padding:11px;
+    overflow: hidden;
+}
+.blue
+{
+    background-color: #C8E0F7;
+}
+.green
+{
+    background-color: #D5F0D2;
+}
+.orange
+{
+    background-color: #FFE3C4;
+}
+.draggage
+{
+    padding: 1%;
+    background: white;
+    border-radius: .4rem;
+    z-index: 300;
+    display: flex;
+    justify-content: space-around;
+    flex-direction:column;
+    text-align: center;
+    align-items:center;
+    cursor:pointer;
+	color:  #15374D;
+    touch-action: none;
+}
+p
+{
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.cap
+{
+    min-height: 100px; 
+    max-width: 1280px;
+    width: 100%; 
+    background: #f2f2f2; 
+    border-radius: 0 0 2rem 2rem; 
+    box-shadow: 0 0 15px 3px #cbc9c9; 
+    padding-bottom: 20px; 
+    margin-bottom: 50px;
+}
+.emptyCell
+{
+    /*box-sizing: border-box;*/
+    background: rgba(173, 100, 237, 0.197);
+    border: 1px solid rgb(182, 100, 237); 
+    z-index: 20; 
+}
+.emptyCell:hover
+{
+    background: rgba(100, 148, 237, 0.334);
+}
+.bottomTools
+{
+    position: fixed;
+    bottom: 0;
+    height: 10%;
+    width: 80%;
+    right: 10%;
+    border-radius: .4rem .4rem 0 0;
+    background: var(--general);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 10px 3px #A9A9A9;
+}
+.rightPanel
+{
+    position: fixed;
+    right: 0;
+    width: 10%;
+    height: 28%;
+    top: 36%;
+    border-radius: .4rem 0 0 .4rem;
+    background: linear-gradient(.25turn, #c2f2f2, #96bcbc);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 10px 3px #A9A9A9;
+}
+.rightButtons
+{
+    width: 80%;
+    padding: 5px;
+}
+.rightButtons:disabled
+{
+    opacity: 30%;
+    color: white;
+}
+.colorButton
+{
+    min-width: 100px;
+    padding: 5px;
+}
+.colorButton:disabled
+{
+    opacity: 30%;
+    color: white;
+}
+.clearButton
+{
+    position: fixed;
+    top:0;
+    left:0;
+}
+.ghost
+{
+    opacity: 50%;
+    background: #5F9EA0;
+}
+.unit
+{
+    border-radius: .4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 150;
+    text-align: center;
+    flex-direction: column;
+    box-shadow: 0 0 15px 3px #cbc9c9; 
+    font-size: 15pt;
+    transition-property: background-color;
+    transition-duration: 250ms;
+    color:  #15374D;
+}
+.anima
+{
+    background-color: #f2f2f2;
+}
+input
+{
+    max-width: 50px;
+}
+button
+{
+    border: transparent;
+    padding: 10px;
+    margin: 3px;
+    margin-bottom: 10px;
+    border-radius: .6rem;
+    color: white;
+    box-shadow: 0 0 15px 3px #cbc9c9; 
+}
+button:hover
+{
+    opacity: 80%;
+}
+button:active
+{
+   opacity: 50%;
+}
+.workSpace
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+}
+.wsGrid
+{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 13fr 1fr;
+    margin-top: 6px;
+    gap: 3px;
+}
+.inside
+{
+    background: white;
+    border-radius: .4rem;
+    display: flex;
+    align-items: center;
+    color: #15374D;
+    padding: 6px;
+}
+.show:hover
+{
+    background-color: #15374d63;
+}
+.popUpBack
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000034;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.popup
+{
+    background: var(--general);
+    min-width: 40%;
+    min-height: 15%;
+    padding: 20px;
+    border-radius: .4rem;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.insideImg
+{
+    max-width: 90%;
+    max-height: 66%;
+}
+.insideP
+{
+    max-width: 80%;
+    margin-top: 3px;
+    margin-bottom: 0;
+    color: inherit;
+    padding-left: 7px;
+    padding-right: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.fullSize
+{
+    width: 100%;
+    height: 100%;
+}
+.cutText
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mainDiv
+{
+    width: 80vw;
+    height: 80vh;
+    overflow-y: scroll;
+}
+.insideMainDivFlex
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.draggableElement
+{
+    width: 70vw;
+    height: 10vh;
+    border-radius: .4rem;
+    border: 1px solid gray;
+    background: #f9f9f9;
+    margin: 3px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.infos
+{
+    width: 80%;
+    max-width: 80%;
+}
+.saveButton
+{
+    position: fixed;
+    bottom: 11px;
+    right: 11px;
+}
+.checklistPanel
+{
+    position: fixed;
+    top:0;
+    left: 0;
+    border-radius: 0 0 .7rem 0 ;
+    min-width: 70px;
+    min-height: 150px;
+    background: var(--general);
+    box-shadow: 0 0 10px 3px #A9A9A9;
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    justify-content: center;
+
+}
+button
+{
+    border: 1px solid var(--bits);
+    padding: 5px;
+    margin: 3px;
+    background: var(--second)/*#4683b47b  box-shadow: 1px 1px 0px 0px var(--bits);*/;
+    border-radius: .5rem;
+    box-shadow: 2px 2px 0px 0px var(--bits);
+    color: var(--other);
+}
+button:hover
+{
+    box-shadow: 1px 1px 0px 0px var(--bits);
+    background: var(--other);
+    color: white;
+}
+button:active
+{
+    background: var(--bits);
+}
+@font-face 
+{
+    font-family: 'Inter';
+    src: url(../fonts/Inter-V.ttf);
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Конструктор интерактивов</title>
+    <script type="module">
+        import * as s from "../static/js/main.js";
+        window.addEventListener("load", ()=>{
+        document.getElementById("startButton").addEventListener("click", s.startCreate);
+        s.LoadColorTheme();
+        });
+    </script>
+    <link rel="stylesheet" href="../static/styles/styles.css">
+</head>
+<body>
+    <div id="mainFrame">
+        <div style="padding: 10px;"><button class="colorButton">Синий</button><button class="colorButton">Зеленый</button><button class="colorButton">Оранжевый</button></div>
+    <label for="eomCode">Введите код эома</label>
+    <input type="text" id="eomCode" style = "max-width:300px"/>
+    <label for="h">Строки:</label>
+    <input type="number" max="100" id="h" value="0"/>
+    <label for="v">Столбцы:</label>
+    <input type="number" max="100" id="v" value="0"/>
+    <button id="startButton">Приступить</button>
+</div>
+</body>
+</html>

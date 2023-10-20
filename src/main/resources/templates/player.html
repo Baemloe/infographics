@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>eom</title>
+  <script type="module">
+        import {App} from "../static/js/player/app.js";
+        window.addEventListener("load", async ()=>{
+            App.initContinue(document.getElementById("id").innerText);
+            document.getElementById("back").onclick = back;
+        });
+        function back()
+        {
+          window.history.back();
+        }
+    </script>
+  <link rel="stylesheet" href="../static/styles/playerStyles.css">
+</head>
+<body>
+<button class="saveButton" id="back" style="z-index: 1000;">Вернуться</button>
+<div th:text = "${id}" style="display: none;" id="id"></div>
+<div id="mainFrame">
+</div>
+</body>
+</html>

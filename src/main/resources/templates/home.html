@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Конструкторы</title>
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <script>
+      window.addEventListener("load", ()=>{
+        document.getElementById("frame").style.height = document.documentElement.clientHeight - 5 + "px";
+        window.requestAnimationFrame(()=>{
+        document.getElementById("circle").style.left = getRandom(1, document.documentElement.clientWidth) + "px";
+        document.getElementById("circle").style.top = getRandom(1, document.documentElement.clientHeight) + "px";
+        document.getElementById("circle").style.border = `${getRandom(2, 5)}px solid rgba(${getRandom(0, 200)}, ${getRandom(0, 200)}, ${getRandom(0, 200)}, .3)`;
+        circleAnimation(document.getElementById("circle"))
+        });  
+        setTimeout(()=>{window.requestAnimationFrame(()=>{
+        document.getElementById("circle2").style.left = getRandom(1, document.documentElement.clientWidth) + "px";
+        document.getElementById("circle2").style.top = getRandom(1, document.documentElement.clientHeight) + "px";
+        document.getElementById("circle2").style.border = `${getRandom(2, 5)}px solid rgba(${getRandom(0, 200)}, ${getRandom(0, 200)}, ${getRandom(0, 200)}, .3)`;
+        circleAnimation(document.getElementById("circle2"))
+        })}, 11000);
+      });
+      function circleAnimation(element)
+      {
+        if(element.clientWidth < (document.documentElement.clientWidth * 2))
+        {
+          element.style.left = element.offsetLeft - 1 + "px";
+          element.style.top = element.offsetTop - 1 + "px";
+          element.style.width = element.clientWidth + 2 + "px";
+          element.style.height = element.clientHeight + 2 + "px";
+          window.requestAnimationFrame(()=>{circleAnimation(element)});
+        }
+        else
+        {
+          window.requestAnimationFrame(()=>{
+          element.style.border = `${getRandom(2, 5)}px solid rgba(${getRandom(50, 200)}, ${getRandom(50, 200)}, ${getRandom(50, 200)}, .3)`;
+          element.style.width = "1px";
+          element.style.height = "1px";
+          element.style.left = getRandom(80, document.documentElement.clientWidth - 80) + "px";
+          element.style.top = getRandom(80, document.documentElement.clientHeight - 80) + "px";
+          circleAnimation(element)
+          });
+        }
+      }
+      function getRandom(min, max)
+      {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    </script>
+    <style>
+      body
+      {
+        margin: 0;
+        background: var(--general);
+        overflow: hidden;
+      }
+      .bu
+      {
+        background: #dddddd;
+        transition: background 200ms ease-in-out, color 200ms ease-in-out, font-size 200ms ease-in-out;
+        font-size: 100%;
+      }
+      .bu:hover
+      {    	
+        font-size: 108%;
+        background: #a19b9d;
+      }
+      .bu:active
+      {
+        font-size: 100%;
+        background: whitesmoke;
+      }
+    </style>
+</head>
+<body>
+  <div id="frame" style="display: flex;align-items: center; justify-content: center; width:100%; height: 100%;z-index: 100;">
+    <button class = "bu" onclick="location.href = '/interactive'" style="z-index:200;width: 200px; height: 200px; display:flex;align-items: center; justify-content: center;flex-direction: column;">
+        <img src = "../static/images/interactive.png" style="width:80%; height: 80%;"/>
+        Интерактив
+    </button>
+    <button class = "bu" onclick="location.href = '/checklist'" style="z-index:200; width: 200px; height: 200px; display:flex;align-items: center; justify-content: center; flex-direction: column;">
+        <img src = "../static/images/checklist.png" style="width:80%; height: 80%;"/>
+        Чек лист
+    </button>
+  </div>
+  <div id="circle" style="z-index:150;width: 50px; height: 50px; border-radius: 50%; position: absolute;"></div>
+  <div id="circle2" style="z-index:150;width: 50px; height: 50px; border-radius: 50%; position: absolute;"></div>
+</body>
+</html>

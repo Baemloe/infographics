@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Загрузить ЭОМ</title>
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <script>
+        var allList;
+        window.addEventListener("load", async ()=>{
+            await sendRequest(1);
+        });
+        async function sendRequest(page)
+        {
+            let req = await fetch("/allList");
+            let res = await req.json();
+            allList = res;
+            for(let one in res)
+            {
+                createBlocks([one, res[one]]);
+            }
+        }
+        function createBlocks(oneUnit)
+        {
+            let block = document.createElement("DIV");
+            block.className = "draggableElement";
+            block.style = "width:70%;margin-left: 15%;justify-content: space-between;padding: 15px;";
+            block.id = oneUnit[1];
+            block.dataset.name = oneUnit[0];
+            let name = document.createElement("P");
+            name.innerText = oneUnit[0];
+            let buttonDiv = document.createElement("DIV");
+            let load = document.createElement("button");
+            load.innerText = "Скачать";
+            load.onclick = Download;
+            buttonDiv.appendChild(load);
+            let edit = document.createElement("button");
+            edit.innerText = "Редактировать";
+            edit.onclick = Edit;
+            buttonDiv.appendChild(edit);
+            let player = document.createElement("button");
+            player.innerText = "Запустить в плеере";
+            player.onclick = LoadPlayer;
+            buttonDiv.appendChild(player);
+            block.appendChild(name);
+            block.appendChild(buttonDiv);
+            document.getElementById("elements").appendChild(block);
+
+        }
+        async function Download(e)
+        {
+            let parent = e.target.parentNode.parentNode;
+            let req = await fetch("/getzip/" + parent.id);
+            let url = URL.createObjectURL(await req.blob());
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = parent.dataset.name + ".zip";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        async function Edit(e)
+        {
+            let parent = e.target.parentNode.parentNode;
+            let req = await fetch("/editeom/" + parent.id);
+            let data = await req.json();
+            localStorage.setItem("id", data.id);  
+            localStorage.setItem("unit", data.size); 
+            localStorage.setItem("colors", data.colors);
+            localStorage.setItem("infos", data.infos);
+            localStorage.setItem("elements", data.elements);
+            localStorage.setItem("draggable", data.draggable);
+            localStorage.setItem("name", data.name);  
+            location.href = "/interactive";
+        }
+        async function LoadPlayer(e)
+        {
+            location.href = "/player/" + e.target.parentNode.parentNode.id;
+        }
+        function back()
+        {
+            localStorage.clear();
+            location.href = "/";
+        }
+        var timer;
+        function find(e)
+        {
+            clearTimeout(timer);
+            timer = setTimeout( async ()=>{
+                if(e.target.value.length > 0)
+                {
+                    document.getElementById("elements").innerHTML = "";
+                    let r = await fetch("/finded", {method: "POST", body: e.target.value});
+                    let rr = await r.json();
+                    for(let oo in rr)
+                    {
+                            createBlocks([oo, allList[oo]]);
+                    }
+                }
+                else
+                {
+                    await sendRequest(1);
+                }
+
+            }, 400);
+        }
+    </script>
+    <style>
+        body
+        {
+            background: var(--general);
+        }
+        .findField
+        {
+            position:fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            min-height: 40px;
+        }
+        .findBlock
+        {
+            background:var(--general);
+            width: 20vw;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            border-radius: 0 0 .4rem .4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="findField">
+        <div class="findBlock">
+            <input type="text" style="width: 90%; max-width: 90%; font-size: 20pt;" oninput="find(event)"/>
+        </div>
+    </div>
+    <div id="elements">
+    </div>
+    <button onclick="back()" style="position:fixed; left: 8px; top: 8px;">Вернутся</button>
+</body>
+</html>

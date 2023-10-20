@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Конструктор чек-листов</title>
+    <link rel="stylesheet" href="../static/styles/playerStyles.css">
+    <style>
+      strong
+      {
+        font-weight: 700;
+      }
+      p
+      {
+        margin: 0;
+        padding-left: 0;
+      }
+      .text-small
+      {
+        font-size: 1rem;
+      }
+      .text-big
+      {
+        font-size: 1.7rem;
+      }
+      .text-huge
+      {
+        font-size: 2rem;
+      }
+      .text-tiny
+      {
+        font-size: 0.7rem;
+      }
+    </style>
+    <script src = "https://ivanchikanov.ru/ckbox/build/ckeditor.js"></script>
+    <script type="module">
+      import {Application} from "../static/jschecklist/application.js";
+      window.addEventListener("load", ()=>{
+        Application.start();
+      });
+    </script>
+</head>
+<body>
+  <div class="bottomTools">
+    <button id = "color">Выбрать цвет</button>
+    <button id = "save">Сохранить и скачать</button>
+  </div>
+  <div class="flexCenter">
+    <div class="nameField show" data-tag="name">
+      <h1>Название ЭОМа</h1>
+    </div>
+    <div class="cap show" data-tag="cap">
+      <img src = "" style="float: left;"/>
+      <h3>Описание</h3>
+    </div>
+    <div style="max-width: 66vw; display: flex; flex-direction: column;">
+      <div id = "workSpace" style="display: flex;flex-direction: column;">
+
+      </div>
+      <button id="add">Добавить</button>
+      <div style="height: 15vh;"></div>
+    </div>
+  </div>
+</body>
+</html>
