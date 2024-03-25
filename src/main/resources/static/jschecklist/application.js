@@ -39,10 +39,15 @@ class Application
             orange.dataset.color = "orange";
             orange.onclick = this.setColor;
             orange.innerHTML = "<img style = 'max-width: 50px; max-height: 50px;' src = '../static/images/orange_02.png'>";
+            let CB = document.createElement("BUTTON");
+            CB.dataset.color = "CB";
+            CB.onclick = this.setColor;
+            CB.innerHTML = "<img style = 'max-width: 50px; max-height: 50px;' src = '../static/images/CB_02.png'>";
             buttonsDiv.appendChild(oldYear);
             buttonsDiv.appendChild(green);
             buttonsDiv.appendChild(blue);
             buttonsDiv.appendChild(orange);
+            buttonsDiv.appendChild(CB);
             let flexContainer = document.createElement("DIV");
             flexContainer.style = "display: flex; flex-direction: column; justify-content: center;";
             flexContainer.appendChild(nameInput);
@@ -144,6 +149,7 @@ class Application
         this.colorMap.set("green", {picture: "green", rgb: "#46B755", gradient: "linear-gradient(0.25turn, #B0E881, #46B755)", empty: '../static/images/green_01.png', full: '../static/images/green_02.png'});
         this.colorMap.set("blue", {picture: "blue", rgb: "#3F8CFF", gradient: "linear-gradient(0.25turn, #3F8CFF, #61B9A9)", empty: '../static/images/blue_01.png', full: '../static/images/blue_02.png'});
         this.colorMap.set("orange", {picture: "orange", rgb: "#FF9432", gradient: "linear-gradient(0.25turn, #FF9432, #FFB546)", empty: '../static/images/orange_01.png', full: '../static/images/orange_02.png'});
+        this.colorMap.set("CB", {picture: "CB", rgb: "#0088BB", gradient: "linear-gradient(#0088BB, #00BBEE)", empty: '../static/images/CB_01.png', full: '../static/images/CB_02.png'});
     }
     static changeContent(e)
     {
@@ -201,7 +207,6 @@ class Application
         document.querySelector(".flexCenter").style.background = `url(../static/backs/${Application.colorMap.get(Application.selectedColor).picture}.png)`;
         document.querySelector(".cap.show").querySelector("img").src = `../static/fingers/${Application.colorMap.get(Application.selectedColor).picture}.png`;
         document.querySelector(".cap.show").style.borderTop = `3px solid ${Application.colorMap.get(Application.selectedColor).rgb}`;
-            
     }
 }
 export {Application}

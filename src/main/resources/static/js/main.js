@@ -251,6 +251,8 @@ async function LoadColorTheme()
     colorsButton[1].innerText = "Синий";
     colorsButton[2].onclick = (e)=>{undis();  e.target.disabled = true; colr.sc.changeColor("orange"); renderTheme();};
     colorsButton[2].innerText = "Оранжевый";
+    colorsButton[3].onclick = (e)=>{undis();  e.target.disabled = true; colr.sc.changeColor("CB"); renderTheme();};
+    colorsButton[3].innerText = "ЦБ";
 }
 function undis()
 {

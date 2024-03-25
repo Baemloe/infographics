@@ -17,6 +17,9 @@ class SetColor
             case "orange":
                 this.#setColor("#FF9432", "#0C6ED6", color, "linear-gradient(0.25turn, #FF9432, #FFB546)");
                 break;
+            case "CB":
+                this.#setColor("#0088BB", "#00BBEE", color, "linear-gradient(#0088BB, #00BBEE)");
+                break;
         }
     }
     #setColor(gen, sec, pic, grad)
