@@ -30,16 +30,19 @@ public class ZipCreator {
     @Autowired
     private ResourceLoader resourceLoader;
     private Eom eom;
-    public File CreateInfographic(Eom eom) throws IOException, URISyntaxException {
+
+    public byte[] CreateInfographic(Eom eom) throws IOException, URISyntaxException {
         this.eom = eom;
-        File file = File.createTempFile(eom.getName(), "zip");
-        ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(file));
-        zip.putNextEntry(this.CreateEntry("media/"));
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ZipOutputStream zip = new ZipOutputStream(baos);
+
+        zip.putNextEntry(new ZipEntry("media/"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("js/"));
+        zip.putNextEntry(new ZipEntry("js/"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("fonts/"));
+        zip.putNextEntry(new ZipEntry("fonts/"));
         zip.closeEntry();
+
         this.CopyDir(zip, "fonts");
         this.CopyDir(zip, "js");
         this.ImageLoader(zip);
@@ -47,52 +50,57 @@ public class ZipCreator {
         this.CopyCats(zip);
         this.GenerateDataJSON(zip);
         this.CopyColorPics(zip);
+
         zip.close();
-        return file;
+        return baos.toByteArray();
     }
-    public File createCheckList(ChecklistEom checklistEom) throws IOException {
-        File file = File.createTempFile(checklistEom.getEomCode(), "zip");
-        ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(file));
-        zip.putNextEntry(this.CreateEntry("media/"));
+    public byte[] createCheckList(ChecklistEom checklistEom) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ZipOutputStream zip = new ZipOutputStream(baos);
+
+        zip.putNextEntry(new ZipEntry("media/"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("fonts/"));
+        zip.putNextEntry(new ZipEntry("fonts/"));
         zip.closeEntry();
+
         this.CopyDir(zip, "fonts");
-        zip.putNextEntry(this.CreateEntry("styles.css"));
+
+        zip.putNextEntry(new ZipEntry("styles.css"));
         zip.write(this.GetResourse("static/styles/playerStyles.css"));
         zip.closeEntry();
         Map<String, String> col = this.getColor(checklistEom.getColors());
-        zip.putNextEntry(this.CreateEntry("media/finger.png"));
+        zip.putNextEntry(new ZipEntry("media/finger.png"));
         zip.write(this.GetResourse("static/fingers/" + col.get("color") + ".png"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("media/low.png"));
+        zip.putNextEntry(new ZipEntry("media/low.png"));
         zip.write(this.GetResourse("static/cats/false.png"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("media/high.png"));
+        zip.putNextEntry(new ZipEntry("media/high.png"));
         zip.write(this.GetResourse("static/cats/true.png"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("media/middle.png"));
+        zip.putNextEntry(new ZipEntry("media/middle.png"));
         zip.write(this.GetResourse("static/cats/middle.png"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("media/back.png"));
+        zip.putNextEntry(new ZipEntry("media/back.png"));
         zip.write(this.GetResourse("static/backs/" + col.get("color") + ".png"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("media/empty.png"));
+        zip.putNextEntry(new ZipEntry("media/empty.png"));
         String[] emp = col.get("empty").split("/");
         zip.write(this.GetResourse("static/images/" +  emp[emp.length - 1]));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("media/full.png"));
+        zip.putNextEntry(new ZipEntry("media/full.png"));
         String[] ful = col.get("full").split("/");
         zip.write(this.GetResourse("static/images/" +  ful[ful.length - 1]));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("eom.json"));
+        zip.putNextEntry(new ZipEntry("eom.json"));
         zip.write(this.GetResourse("static/json/eom.json"));
         zip.closeEntry();
-        zip.putNextEntry(this.CreateEntry("index.html"));
-        zip.write(this.createIndex(checklistEom, col));
+        zip.putNextEntry(new ZipEntry("index.html"));
+        zip.write(this.createIndex(checklistEom, this.getColor(checklistEom.getColors())));
         zip.closeEntry();
+
         zip.close();
-        return file;
+        return baos.toByteArray();
     }
     private byte[] createIndex(ChecklistEom checklistEom, Map<String, String> col) throws IOException {
         byte[] buff = this.GetResourse("templates/checklistclishe.html");
@@ -118,7 +126,7 @@ public class ZipCreator {
         Matcher matcher = pattern.matcher(colors);
         if(matcher.find())
         {
-           return matcher.group(1);
+            return matcher.group(1);
         }
         return null;
     }
